@@ -64,7 +64,7 @@ The subscription link should download a JSON file that contains an array of prox
 |----------------------|-------------------------------------------------------|----------|
 | SUBNET               | Subnet (CIDR) traffic that goes into tunnel.          | Yes      |
 
-You must mount the local config file to the container using `-v /etc/ss/config.json:/config.json`.
+You must mount the local config file to the container using `-v /etc/trojan-go/config.json:/config.json`.
 
 ### Run
 
