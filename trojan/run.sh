@@ -11,6 +11,8 @@ set +u
 sysctl -w net.ipv4.ip_forward=1
 ulimit -n $(ulimit -n -H)
 
+cd /etc/trojan-go
+
 # Resolve proxy server address to IPv4 address
 REMOTE=$(jq -r '.remote_addr // empty' config.json)
 [ -z "$REMOTE" ] && { echo "[trojan-go] empty remote address"; exit 1; }

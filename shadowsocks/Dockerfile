@@ -20,6 +20,8 @@ COPY --from=0 /usr/bin/*tun2socks* /usr/bin/
 
 RUN apk add jq libev
 
+RUN mkdir /etc/shadowsocks
+
 COPY run.sh /bin/run.sh
 
 CMD ["/bin/sh", "/bin/run.sh"]

@@ -10,7 +10,7 @@ Supported environment variable:
 | UPDATE               | If "true", update config file from subscription link. | No       |
 
 If you don't use subscription link, mount the local config file to the container
-using `-v /etc/ss/config.json:/subs.json`.
+using `-v /etc/ss/config.json:/etc/shadowsocks/config.json`.
 
 The subscription link should download a JSON file that contains an array of proxy object.
 

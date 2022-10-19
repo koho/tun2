@@ -11,16 +11,21 @@ set +u
 sysctl -w net.ipv4.ip_forward=1
 ulimit -n $(ulimit -n -H)
 
-if [ "$UPDATE" == "true" ] || [ ! -f subs.json ]; then
+cd /etc/shadowsocks
+
+if [ "$UPDATE" == "true" ] || [ ! -f config.json ]; then
   set -u
   : ${URL}
   set +u
   # Download proxy config
-  wget $URL -O subs.json
+  wget $URL -O config.json
 fi
 
 [ -z "$NAME" ] && FILTER='.[0]' || FILTER='first(.[] | select(.name == env.NAME))'
-jq -r "$FILTER" subs.json > config.json
+jq -r "$FILTER" config.json > /tmp/config.json
+
+cd /tmp
+
 [ -s config.json ] || { echo "[shadowsocks] proxy item not found"; exit 1; }
 
 # Resolve proxy server address to IPv4 address
