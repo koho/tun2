@@ -19,6 +19,7 @@ REMOTE=$(jq -r '.remote_addr // empty' config.json)
 
 SERVER_IP=$(getent ahostsv4 $REMOTE | awk '{ print $1 }' | sort | uniq | paste -s -d " ")
 [ -z "$SERVER_IP" ] && { echo "[trojan-go] fail to resolve remote address '$REMOTE'"; exit 1; }
+DNS_IP=$(cat /etc/resolv.conf | grep -i '^nameserver'| head -n1 | cut -d ' ' -f2)
 
 SOCKS_LOCAL=$(jq -r '(.local_addr) + ":" + (.local_port | tostring)' config.json)
 
@@ -26,7 +27,7 @@ SOCKS_LOCAL=$(jq -r '(.local_addr) + ":" + (.local_port | tostring)' config.json
 /usr/local/bin/trojan-go -config config.json &
 
 # Start tun2socks
-source /usr/bin/tun2socks.sh $SOCKS_LOCAL $SERVER_IP $SUBNET
+source /usr/bin/tun2socks.sh $SOCKS_LOCAL $SERVER_IP $DNS_IP $SUBNET
 
 echo "[trojan-go] startup completed"
 
